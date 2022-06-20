@@ -52,6 +52,7 @@ extern int32_t wav_player_app(void* p);
 extern int32_t clock_app(void *p);
 extern int32_t unirfremix_app(void *p);
 extern int32_t spectrum_analyzer_app(void* p);
+extern int32_t temp_sensor_app(void * p);
 
 // Games
 extern int32_t snake_game_app(void* p);
@@ -242,6 +243,14 @@ const FlipperApplication FLIPPER_APPS[] = {
     .name = "Spectrum Analyzer", 
     .stack_size = 1024, 
     .icon = &A_SpectrumAnalyzer_14,
+    .flags = FlipperApplicationFlagDefault},
+#endif
+
+#ifdef APP_TEMP_SENSOR
+    {.app = temp_sensor_app, 
+    .name = "Temperature", 
+    .stack_size = 1024, 
+    .icon = &A_Tamagotchi_14,
     .flags = FlipperApplicationFlagDefault},
 #endif
 

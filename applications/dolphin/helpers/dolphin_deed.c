@@ -34,6 +34,8 @@ static const DolphinDeedWeight dolphin_deed_weights[] = {
 
     {3, DolphinAppBadusb}, // DolphinDeedBadUsbPlayScript
     {3, DolphinAppU2f}, // DolphinDeedU2fAuthorized
+
+    {1, DolphinAppTemperatureSensor}, // DolphinDeedTemperatureSensor
 };
 
 static uint8_t dolphin_deed_limits[] = {
@@ -44,6 +46,7 @@ static uint8_t dolphin_deed_limits[] = {
     15, // DolphinAppIbutton
     15, // DolphinAppBadusb
     15, // DolphinAppU2f
+    30, // DolphinAppTemperatureSensorPlugin
 };
 
 _Static_assert(COUNT_OF(dolphin_deed_weights) == DolphinDeedMAX, "dolphin_deed_weights size error");

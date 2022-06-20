@@ -14,6 +14,7 @@ typedef enum {
     DolphinAppIbutton,
     DolphinAppBadusb,
     DolphinAppU2f,
+    DolphinAppTemperatureSensor,
     DolphinAppMAX,
 } DolphinApp;
 
@@ -51,6 +52,8 @@ typedef enum {
     DolphinDeedBadUsbPlayScript,
 
     DolphinDeedU2fAuthorized,
+
+    DolphinDeedTemperatureSensor,
 
     DolphinDeedMAX,
 
