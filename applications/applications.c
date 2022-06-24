@@ -29,7 +29,6 @@ extern int32_t display_test_app(void* p);
 extern int32_t gpio_app(void* p);
 extern int32_t ibutton_app(void* p);
 extern int32_t infrared_app(void* p);
-extern int32_t infrared_monitor_app(void* p);
 extern int32_t keypad_test_app(void* p);
 extern int32_t lfrfid_app(void* p);
 extern int32_t lfrfid_debug_app(void* p);
@@ -49,14 +48,16 @@ extern int32_t file_browser_app(void* p);
 // Plugins
 extern int32_t music_player_app(void* p);
 extern int32_t wav_player_app(void* p);
-extern int32_t clock_app(void *p);
-extern int32_t unirfremix_app(void *p);
+extern int32_t clock_app(void* p);
+extern int32_t unirfremix_app(void* p);
 extern int32_t spectrum_analyzer_app(void* p);
 extern int32_t temp_sensor_app(void * p);
 
 // Games
 extern int32_t snake_game_app(void* p);
-extern int32_t tetris_game_app(void *p);
+extern int32_t tetris_game_app(void* p);
+extern int32_t tictactoe_game_app(void* p);
+extern int32_t arkanoid_game_app(void* p);
 
 // On system start hooks declaration
 extern void bt_on_system_start();
@@ -231,7 +232,7 @@ const FlipperApplication FLIPPER_APPS[] = {
 #endif
 
 #ifdef APP_UNIRFREMIX
-     {.app = unirfremix_app,
+    {.app = unirfremix_app,
      .name = "UniRF Remix",
      .stack_size = 2048,
      .icon = &A_UniRFRemix_14,
@@ -239,11 +240,11 @@ const FlipperApplication FLIPPER_APPS[] = {
 #endif
 
 #ifdef APP_SPECTRUM_ANALYZER
-    {.app = spectrum_analyzer_app, 
-    .name = "Spectrum Analyzer", 
-    .stack_size = 1024, 
-    .icon = &A_SpectrumAnalyzer_14,
-    .flags = FlipperApplicationFlagDefault},
+    {.app = spectrum_analyzer_app,
+     .name = "Spectrum Analyzer",
+     .stack_size = 1024,
+     .icon = &A_SpectrumAnalyzer_14,
+     .flags = FlipperApplicationFlagDefault},
 #endif
 
 #ifdef APP_TEMP_SENSOR
@@ -379,7 +380,7 @@ const FlipperApplication FLIPPER_PLUGINS[] = {
     {.app = music_player_app,
      .name = "Music Player",
      .stack_size = 2048,
-     .icon = &A_MusicPlayer_14,
+     .icon = NULL,
      .flags = FlipperApplicationFlagDefault},
 #endif
 
@@ -387,7 +388,7 @@ const FlipperApplication FLIPPER_PLUGINS[] = {
     {.app = wav_player_app,
      .name = "WAV Player",
      .stack_size = 4096,
-     .icon = &A_MusicPlayer_14,
+     .icon = NULL,
      .flags = FlipperApplicationFlagDefault},
 #endif
 
@@ -402,7 +403,7 @@ const FlipperApplication FLIPPER_GAMES[] = {
     {.app = snake_game_app,
      .name = "Snake",
      .stack_size = 1024,
-     .icon = &A_Snake_14,
+     .icon = NULL,
      .flags = FlipperApplicationFlagDefault},
 #endif
 
@@ -410,7 +411,23 @@ const FlipperApplication FLIPPER_GAMES[] = {
     {.app = tetris_game_app,
      .name = "Tetris",
      .stack_size = 1024,
-     .icon = &A_Tetris_14,
+     .icon = NULL,
+     .flags = FlipperApplicationFlagDefault},
+#endif
+
+#ifdef APP_ARKANOID_GAME
+    {.app = arkanoid_game_app,
+     .name = "Arkanoid",
+     .stack_size = 1024,
+     .icon = NULL,
+     .flags = FlipperApplicationFlagDefault},
+#endif
+
+#ifdef APP_TICTACTOE_GAME
+    {.app = tictactoe_game_app,
+     .name = "Tic Tac Toe",
+     .stack_size = 1024,
+     .icon = NULL,
      .flags = FlipperApplicationFlagDefault},
 #endif
 
@@ -472,14 +489,6 @@ const FlipperApplication FLIPPER_DEBUG_APPS[] = {
     {.app = uart_echo_app,
      .name = "Uart Echo",
      .stack_size = 2048,
-     .icon = NULL,
-     .flags = FlipperApplicationFlagDefault},
-#endif
-
-#ifdef APP_INFRARED_MONITOR
-    {.app = infrared_monitor_app,
-     .name = "Infrared Monitor",
-     .stack_size = 1024,
      .icon = NULL,
      .flags = FlipperApplicationFlagDefault},
 #endif
