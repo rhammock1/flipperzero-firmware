@@ -1,12 +1,10 @@
-#include <furi.h>
-#include <furi_hal.h>
 #include "../subghz_i.h"
 #include "../views/subghz_read_raw.h"
 #include <dolphin/dolphin.h>
 #include <lib/subghz/protocols/raw.h>
 #include <lib/toolbox/path.h>
 
-#define RAW_FILE_NAME "R_"
+#define RAW_FILE_NAME "RAW_"
 #define TAG "SubGhzSceneReadRAW"
 
 bool subghz_scene_read_raw_update_filename(SubGhz* subghz) {
@@ -108,6 +106,7 @@ void subghz_scene_read_raw_on_enter(void* context) {
 
 bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
     SubGhz* subghz = context;
+    bool consumed = false;
     if(event.type == SceneManagerEventTypeCustom) {
         switch(event.event) {
         case SubGhzCustomEventViewReadRAWBack:
@@ -143,7 +142,7 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
                     }
                 }
             }
-            return true;
+            consumed = true;
             break;
 
         case SubGhzCustomEventViewReadRAWTXRXStop:
@@ -158,14 +157,14 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
                 subghz_sleep(subghz);
             };
             subghz->state_notifications = SubGhzNotificationStateIDLE;
-            return true;
+            consumed = true;
             break;
 
         case SubGhzCustomEventViewReadRAWConfig:
             scene_manager_set_scene_state(
                 subghz->scene_manager, SubGhzSceneReadRAW, SubGhzCustomEventManagerSet);
             scene_manager_next_scene(subghz->scene_manager, SubGhzSceneReceiverConfig);
-            return true;
+            consumed = true;
             break;
 
         case SubGhzCustomEventViewReadRAWErase:
@@ -177,7 +176,7 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
             }
             subghz->txrx->rx_key_state = SubGhzRxKeyStateIDLE;
             notification_message(subghz->notifications, &sequence_reset_rgb);
-            return true;
+            consumed = true;
             break;
 
         case SubGhzCustomEventViewReadRAWMore:
@@ -186,7 +185,7 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
                     subghz->scene_manager, SubGhzSceneReadRAW, SubGhzCustomEventManagerSet);
                 subghz->txrx->rx_key_state = SubGhzRxKeyStateRAWLoad;
                 scene_manager_next_scene(subghz->scene_manager, SubGhzSceneMoreRAW);
-                return true;
+                consumed = true;
             } else {
                 furi_crash("SubGhz: RAW file name update error.");
             }
@@ -216,7 +215,7 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
                     }
                 }
             }
-            return true;
+            consumed = true;
             break;
 
         case SubGhzCustomEventViewReadRAWSendStop:
@@ -226,7 +225,7 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
                 subghz_sleep(subghz);
             }
             subghz_read_raw_stop_send(subghz->subghz_read_raw);
-            return true;
+            consumed = true;
             break;
 
         case SubGhzCustomEventViewReadRAWIDLE:
@@ -243,22 +242,8 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
 
             string_t temp_str;
             string_init(temp_str);
-
-            FuriHalRtcDateTime datetime;
-            furi_hal_rtc_get_datetime(&datetime);
-            char strings[1][25];
-            sprintf(
-                strings[0],
-                "%s%.4d%.2d%.2d%.2d%.2d",
-                "R",
-                datetime.year,
-                datetime.month,
-                datetime.day,
-                datetime.hour,
-                datetime.minute);
-
             string_printf(
-                temp_str, "%s/%s%s", SUBGHZ_RAW_FOLDER, strings[0], SUBGHZ_APP_EXTENSION);
+                temp_str, "%s/%s%s", SUBGHZ_RAW_FOLDER, RAW_FILE_NAME, SUBGHZ_APP_EXTENSION);
             subghz_protocol_raw_gen_fff_data(subghz->txrx->fff_data, string_get_cstr(temp_str));
             string_clear(temp_str);
 
@@ -271,7 +256,7 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
             subghz->state_notifications = SubGhzNotificationStateIDLE;
             subghz->txrx->rx_key_state = SubGhzRxKeyStateAddKey;
 
-            return true;
+            consumed = true;
             break;
 
         case SubGhzCustomEventViewReadRAWREC:
@@ -279,21 +264,9 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
                 scene_manager_next_scene(subghz->scene_manager, SubGhzSceneNeedSaving);
             } else {
                 //subghz_get_preset_name(subghz, subghz->error_str);
-                FuriHalRtcDateTime datetime;
-                furi_hal_rtc_get_datetime(&datetime);
-                char strings[1][25];
-                sprintf(
-                    strings[0],
-                    "%s%.4d%.2d%.2d%.2d%.2d",
-                    "R",
-                    datetime.year,
-                    datetime.month,
-                    datetime.day,
-                    datetime.hour,
-                    datetime.minute);
                 if(subghz_protocol_raw_save_to_file_init(
                        (SubGhzProtocolDecoderRAW*)subghz->txrx->decoder_result,
-                       strings[0],
+                       RAW_FILE_NAME,
                        subghz->txrx->frequency,
                        subghz->txrx->preset)) {
                     DOLPHIN_DEED(DolphinDeedSubGhzRawRec);
@@ -309,7 +282,7 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
                     scene_manager_next_scene(subghz->scene_manager, SubGhzSceneShowError);
                 }
             }
-            return true;
+            consumed = true;
             break;
 
         case SubGhzCustomEventViewReadRAWSave:
@@ -319,7 +292,7 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
                 subghz->txrx->rx_key_state = SubGhzRxKeyStateBack;
                 scene_manager_next_scene(subghz->scene_manager, SubGhzSceneSaveName);
             }
-            return true;
+            consumed = true;
             break;
 
         default:
@@ -343,7 +316,7 @@ bool subghz_scene_read_raw_on_event(void* context, SceneManagerEvent event) {
             break;
         }
     }
-    return false;
+    return consumed;
 }
 
 void subghz_scene_read_raw_on_exit(void* context) {

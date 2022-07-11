@@ -7,27 +7,19 @@ steps:
   image: alpine/git
   commands:
   - git submodule sync
-  - git -c protocol.version=2 submodule update --init --force
+  - git -c protocol.version=2 submodule update --init --force --recursive
   - git submodule foreach git config --local gc.auto 0
   - git log -1 --format='%H'
-
-- name: 'Rebuild Assets'
-  image: hfdj/fztools
-  pull: never
-  commands:
-  - export DIST_SUFFIX=${DRONE_TAG}
-  - export WORKFLOW_BRANCH_OR_TAG=${DRONE_TAG}
-  - make assets_rebuild assets_manifest
 
 - name: 'Build default fw'
   image: hfdj/fztools
   pull: never
   commands:
   - export DIST_SUFFIX=${DRONE_TAG}
-  - export WORKFLOW_BRANCH_OR_TAG=${DRONE_TAG}
-  - make updater_package TARGET=f7 DEBUG=0 COMPACT=1
+  - export WORKFLOW_BRANCH_OR_TAG=dev-cfw
+  - ./fbt --with-updater COMPACT=1 DEBUG=0 updater_package
   - mkdir artifacts-default
-  - mv dist/f7/* artifacts-default/
+  - mv dist/f7-C/* artifacts-default/
   - ls -laS artifacts-default
   - ls -laS artifacts-default/f7-update-${DRONE_TAG}
 
@@ -36,12 +28,12 @@ steps:
   commands:
   - tar czpf artifacts-default/flipper-z-any-resources-${DRONE_TAG}.tgz -C assets resources
   - mkdir sd-card
-  - mkdir -p sd-card/wav_player
   - mkdir -p sd-card/subghz/assets
   - mkdir -p sd-card/nfc/assets
   - cp assets/resources/subghz/assets/universal_rf_map sd-card/subghz/assets/universal_rf_map
   - cp assets/resources/subghz/assets/setting_user sd-card/subghz/assets/setting_user
   - cp assets/resources/nfc/assets/mf_classic_dict.nfc sd-card/nfc/assets/mf_classic_dict.nfc
+  - cp assets/resources/Manifest sd-card/Manifest
   - zip -r artifacts-default/sd-card-${DRONE_TAG}.zip sd-card
   - rm -rf sd-card
   - ls -laS artifacts-default
@@ -88,7 +80,7 @@ steps:
       Version: {{build.tag}}  
 
 
-      [-Github-](https://github.com/Eng1n33r/flipperzero-firmware/releases/latest)"
+      [-Github-](https://github.com/Eng1n33r/flipperzero-firmware/releases/tag/${DRONE_TAG})"
     document:
       - artifacts-default/flipper-z-f7-full-${DRONE_TAG}.dfu
       - artifacts-default/flipper-z-f7-update-${DRONE_TAG}.zip

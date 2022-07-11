@@ -24,166 +24,62 @@ Our Discord Community:
 <br>
 <br>
 
-# Update firmware
+# What changed
+* SubGhz regional TX restriction removed
+* Rolling code protocols now has ability to save & send captured signals
+* FAAC SLH (Spa) & BFT Mitto (secure with seed) manual creation
+* Custom plugins and games included
+* Extra SubGhz frequencies + extra mifare classic keys
+* Picopass/iClass plugin is included in releases
+* Other small fixes and changes
 
-## [Get Latest Firmware from GitHub Releases](https://github.com/Eng1n33r/flipperzero-firmware/releases)
+See changelog in releases for latest updates!
 
-<br>
-<br>
+### Current modified and new SubGhz protocols list:
+- CAME Atomo
+- FAAC SLH (Spa)
+- Keeloq(+ proper manufacturer codes selection)
+- Nice Flor S
+- SecPlus v1 & v2
+- Star Line
 
-### **Update to the latest official firmware before proceeding**
+### Apps included:
 
-<br>
-<br>
-
-## With offline update on flipper
-
-### **Replace (CURRENT VERSION) with version that you downloaded from releases**
-- Unpack `flipper-z-f7-update-(CURRENT VERSION).tgz` (or `.zip`) into any free folder on your PC or smartphone
-- You should find folder named `f7-update-(CURRENT VERSION)` that contains files like `update.fuf`, `resources.tar` and etc..
-- Remove microSD card from flipper and insert it into PC or smartphone (you can skip this step and upload all files using qFlipper)
-- Create new folder `update` on the root of the microSD card and move folder that you previously extracted from archive - `f7-update-(CURRENT VERSION)` into `update` on microSD card
-- So result should look like `update/f7-update-(CURRENT VERSION)/` with all files in this folder on microSD card, remember iOS default Files app doesnt show all files properly (3 instead of 5), so you need to use another app for unpacking or use PC or Android
-- Verify that all files are present on your microSD card:
-    * `update/f7-update-(CURRENT VERSION)/flipper-z-f7-full-(CURRENT VERSION).dfu`
-    * `update/f7-update-(CURRENT VERSION)/flipper-z-f7-updater-(CURRENT VERSION).bin`
-    * `update/f7-update-(CURRENT VERSION)/resources.tar`
-    * `update/f7-update-(CURRENT VERSION)/stm32wb5x_BLE_Stack_light_fw.bin`
-    * `update/f7-update-(CURRENT VERSION)/update.fuf`
-
-
-- After all you need to insert microSD card back into flipper, navigate into filebrowser, open this file 
-`update/f7-update-(CURRENT VERSION)/update.fuf`
-- Update will start, wait for all stages, and when flipper started after update, you can upload any custom [IR libs](https://github.com/logickworkshop/Flipper-IRDB), and other stuff using qFlipper or directly into microSD card
-
-<br>
-<br>
-
-## With qFlipper
-
-### **Replace (CURRENT VERSION) with version that you downloaded from releases**
-- Connect your device and select `Update from file`
-then select **`flipper-z-f7-full-(CURRENT VERSION).dfu`**
-
-- And wait, if all flashed successfully - you can manually upload IR libs and other stuff to sd card
-
-- If you doing install for first time or migrating from official fw, unpack 3 folders from archive `sd-card-(CURRENT VERSION).zip` onto your microSD card
+- Clock/Stopwatch [(By CompaqDisc, Stopwatch & Sound Alert By RogueMaster)](https://github.com/RogueMaster/flipperzero-firmware-wPlugins/blob/unleashed/applications/clock_app/clock_app.c)
+- UniversalRF Remix [(By ESurge)(Original UniversalRF By jimilinuxguy)](https://github.com/ESurge/flipperzero-firmware-unirfremix)
+- Tetris [(By jeffplang)](https://github.com/jeffplang/flipperzero-firmware/tree/tetris_game/applications/tetris_game)
+- Spectrum Analyzer [(By jolcese)](https://github.com/jolcese/flipperzero-firmware/tree/spectrum/applications/spectrum_analyzer) - [Ultra Narrow mode & scan channels non-consecutively](https://github.com/theY4Kman/flipperzero-firmware/commits?author=theY4Kman)
+- Arkanoid [(By gotnull)](https://github.com/gotnull/flipperzero-firmware-wPlugins)
+- Tic Tac Toe [(By gotnull)](https://github.com/gotnull/flipperzero-firmware-wPlugins)
 
 
-<br>
-<br>
+## Support us so we can buy equipment and develop new features
+* ETH/BSC/ERC20-Tokens: `0xFebF1bBc8229418FF2408C07AF6Afa49152fEc6a`
+* BTC: `bc1q0np836jk9jwr4dd7p6qv66d04vamtqkxrecck9`
+* DOGE: `D6R6gYgBn5LwTNmPyvAQR6bZ9EtGgFCpvv`
+* LTC: `ltc1q3ex4ejkl0xpx3znwrmth4lyuadr5qgv8tmq8z9`
 
-## With USB DFU 
+# Instructions
+## [- How to install firmware](https://github.com/Eng1n33r/flipperzero-firmware/blob/dev/documentation/HowToInstall.md)
 
-1. Download latest [Firmware](https://github.com/Eng1n33r/flipperzero-firmware/releases)
+## [- How to build firmware](https://github.com/Eng1n33r/flipperzero-firmware/blob/dev/documentation/HowToBuild.md)
 
-2. Reboot Flipper to Bootloader
- - Press and hold `← Left` + `↩ Back` for reset 
- - Release `↩ Back` and keep holding `← Left` until blue LED lights up
- - Release `← Left`
-
-### **Replace (CURRENT VERSION) with version that you downloaded from releases**
-3. Run `dfu-util -D flipper-z-f7-full-(CURRENT VERSION).dfu -a 0`
-
-4. If you doing install for first time or migrating from official fw, unpack 3 folders from archive `sd-card-(CURRENT VERSION).zip` to your microSD card
-
-<br>
-<br>
-
-# After install:
-- ### If you installed using .dfu - unpack 3 folders from archive `sd-card-(CURRENT VERSION).zip` to your microSD card
-<br>
-
-- ## [How To: Configure UniversalRF Remix App](https://github.com/Eng1n33r/flipperzero-firmware/blob/dev/documentation/UniRFRemix.md)
+## [- Configure UniversalRF Remix App](https://github.com/Eng1n33r/flipperzero-firmware/blob/dev/documentation/UniRFRemix.md)
 
 <br>
 <br>
 
 # Where I can find IR, SubGhz, ... DBs, and other stuff?
 ## [Awesome Flipper Zero - Github](https://github.com/djsime1/awesome-flipperzero)
+## [UberGuidoZ Playground - Large collection of files - Github](https://github.com/UberGuidoZ/Flipper)
 
 <br>
 <br>
-
-# How to Build by yourself:
-
-## Clone the Repository
-
-You should clone with 
-```shell
-$ git clone --recursive https://github.com/Eng1n33r/flipperzero-firmware.git
-```
-
-## Build with Docker
-
-### Prerequisites
-
-1. Install [Docker Engine and Docker Compose](https://www.docker.com/get-started)
-2. Prepare the container:
-
- ```sh
- docker-compose up -d
- ```
-
-### Compile everything for development
-
-```sh
-docker-compose exec dev make
-```
-
-### Compile everything for release + get updater package to update from microSD card
-
-```sh
-docker-compose exec dev make updater_package TARGET=f7 DEBUG=0 COMPACT=1
-```
-
-Check `dist/` for build outputs.
-
-Use **`flipper-z-{target}-full-{suffix}.dfu`** to flash your device.
-
-If compilation fails, make sure all submodules are all initialized. Either clone with `--recursive` or use `git submodule update --init --recursive`.
-
-# Build on macOS
-
-## macOS Prerequisites
-
-Make sure you have [brew](https://brew.sh) and install all the dependencies:
-```sh
-brew bundle --verbose
-```
-
-**P.S. Brewfile has been fixed, so build works now**
-
-### Compile everything for development
-
-```sh
-make
-```
-
-### Compile everything for release + get updater package to update from microSD card
-
-```sh
-make updater_package TARGET=f7 DEBUG=0 COMPACT=1
-```
-
-Check `dist/` for build outputs.
-
-Use **`flipper-z-{target}-full-{suffix}.dfu`** to flash your device.
-
-# Apps included
-
-- [Clock/Stopwatch (By CompaqDisc, Stopwatch & Sound Alert By RogueMaster)](https://github.com/RogueMaster/flipperzero-firmware-wPlugins/blob/unleashed/applications/clock_app/clock_app.c)
-- [UniversalRF Remix (By ESurge)(Original UniversalRF By jimilinuxguy)](https://github.com/ESurge/flipperzero-firmware-unirfremix)
-- [WAV Player (By DrZlo13)](https://github.com/flipperdevices/flipperzero-firmware/tree/zlo/wav-player) With Fix From [Atmanos](https://github.com/at-manos)
-- [Tetris (By jeffplang)](https://github.com/jeffplang/flipperzero-firmware/tree/tetris_game/applications/tetris_game)
-- [Spectrum Analyzer (By jolcese)](https://github.com/jolcese/flipperzero-firmware/tree/spectrum/applications/spectrum_analyzer) - [Ultra Narrow mode & scan channels non-consecutively](https://github.com/theY4Kman/flipperzero-firmware/commits?author=theY4Kman)
-- [Arkanoid (By gotnull)](https://github.com/gotnull/flipperzero-firmware-wPlugins)
-- [Tic Tac Toe (By gotnull)](https://github.com/gotnull/flipperzero-firmware-wPlugins)
 
 # Links
 
 * Unofficial Discord: [discord.gg/58D6E8BtTU](https://discord.gg/58D6E8BtTU)
-* Docs by atmanos: [https://flipper.atmanos.com/docs](https://flipper.atmanos.com/docs/your-first-program/intro)
+* Docs by atmanos / How to write your own app (outdated): [https://flipper.atmanos.com/docs](https://flipper.atmanos.com/docs/your-first-program/intro)
 
 * Official Docs: [http://docs.flipperzero.one](http://docs.flipperzero.one)
 * Official Forum: [forum.flipperzero.one](https://forum.flipperzero.one/)
@@ -198,7 +94,7 @@ Use **`flipper-z-{target}-full-{suffix}.dfu`** to flash your device.
 - `documentation`   - Documentation generation system configs and input files
 - `firmware`        - Firmware source code
 - `lib`             - Our and 3rd party libraries, drivers and etc...
-- `make`            - Make helpers
+- `site_scons`      - Build helpers
 - `scripts`         - Supplementary scripts and python libraries home
 
 Also pay attention to `ReadMe.md` files inside of those directories.
